@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors"
 import dotenv from "dotenv"
 import redisClient from "./utils/radisClient";
+import path from "path";
 dotenv.config()
 const app = express();
 app.use(express.json({ limit: "10mb" }));
@@ -16,12 +17,13 @@ app.use(cors(
         credentials: true
     }
 ))
-app.use(express.static("dist"))
+app.use(express.static(path.join(__dirname, "dist")))
 
 app.use("/api", userRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    res.status(404).json({ message: "Route Not Found" })
+    res.sendFile(path.join(__dirname, "dist/index.html"))
+    // res.status(404).json({ message: "Route Not Found" })
 })
 
 mongoose.connect(process.env.MONGO_URL as string)
