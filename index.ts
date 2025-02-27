@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, "dist")))
 app.use("/api", userRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    res.sendFile(path.join(__dirname, "dist/index.html"))
+    res.sendFile(path.join(__dirname, "dist", "index.html"))
     // res.status(404).json({ message: "Route Not Found" })
 })
 
